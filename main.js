@@ -36,7 +36,7 @@ class Store {
       let itemPrice = this.getPrice(name, quantity);
       let currentSale = itemPrice * quantity;
       this.totalSales = this.totalSales + currentSale;
-      let remaining = available - currentSale;
+      let remaining = available - quantity;
       this.stocks[name] = remaining;
       console.log("Thanks for your purchase.");
     }
