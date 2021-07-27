@@ -3,6 +3,7 @@ class Store {
     this.name = name;
     this.items = [];
     this.prices = {};
+    this.totalSales = 0;
   }
   isItemAvailable(name) {
     let itemIndex = this.items.indexOf(name);
@@ -20,6 +21,10 @@ class Store {
     } else {
       console.log("Sorry. We do not have the item.");
     }
+  }
+
+  getTotalSale() {
+    return this.totalSales;
   }
   addItem(name, price) {
     this.items.push(name);
