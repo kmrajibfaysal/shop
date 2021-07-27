@@ -2,6 +2,7 @@ class Store {
   constructor(name) {
     this.name = name;
     this.items = [];
+    this.stocks = {};
     this.prices = {};
     this.totalSales = 0;
   }
@@ -26,12 +27,33 @@ class Store {
   getTotalSale() {
     return this.totalSales;
   }
-  addItem(name, price) {
-    this.items.push(name);
-    this.prices[name] = price;
+
+  sellItem(name, quantity) {
+    let available = this.stocks[name];
+    if (available < quantity) {
+      console.log("Sorry we do not have enough.");
+    } else {
+      let itemPrice = this.getPrice(name, quantity);
+      let currentSale = itemPrice * quantity;
+      this.totalSales = this.totalSales + currentSale;
+      let remaining = available - currentSale;
+      this.stocks[name] = remaining;
+      console.log("Thanks for your purchase.");
+    }
+  }
+  addItem(name, quantity, price) {
+    let isExisting = this.isItemAvailable(name);
+    if (isExisting == true) {
+      let available = this.stocks[name];
+      this.stocks[name] = available + quantity;
+    } else {
+      this.items.push(name);
+      this.prices[name] = price;
+      this.stocks[name] = quantity;
+    }
   }
 }
 
-let akijStore = new Store("Akij Fashion Ltd.");
-akijStore.addItem("shirt", 300);
-akijStore.addItem("pant", 500);
+let habluStore = new Store("Hablu Fashion Store");
+habluStore.addItem("shirt", 40, 300);
+habluStore.addItem("pant", 30, 500);
